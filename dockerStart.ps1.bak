@@ -1,4 +1,0 @@
-﻿cd D:\Coding\RabbitMQ
-docker compose up -d
-
-read-host “Press ENTER to continue...”
