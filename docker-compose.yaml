@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq_1
+    hostname: rabbitmq
+    ports:
+      - 5671:5671
+      - 5672:5672
+      - 15672:15672
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq/
+      - rabbitmq-log:/var/log/rabbitmq
+    networks:
+      - mqNetwork
+    tty: true
+      
+  publisher-client:
+    image: publisher:latest
+    container_name: publisher_1
+    hostname: publisher
+    environment:
+      RMQ_HOSTNAME: "rabbitmq"
+    depends_on: 
+      - rabbitmq
+    networks:
+      - mqNetwork
+    restart: "always"
+    tty: true
+      
+  consumer-client:
+    image: consumer:latest
+    container_name: consumer_1
+    hostname: consumer
+    environment:
+      RMQ_HOSTNAME: "rabbitmq"
+    depends_on: 
+      - rabbitmq
+    networks:
+      - mqNetwork
+    restart: "always"
+    tty: true
+
+volumes:
+    rabbitmq-data:
+    rabbitmq-log:
+
+networks:
+  mqNetwork:
+    driver: bridge

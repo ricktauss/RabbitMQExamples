@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "2_Task": {
+      "commandName": "Project",
+      "commandLineArgs": "\"First message ...\""
+    }
+  }
+}
